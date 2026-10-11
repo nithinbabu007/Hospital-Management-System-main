@@ -1,0 +1,59 @@
+{% extends "index.html" %}
+{% block content %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Doctor List</title>
+</head>
+<body>
+
+<h2>Doctors List</h2>
+
+<table border="1" cellpadding="10">
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Department</th>
+        <th>Phone</th>
+        <th>Email</th>
+        <th>Qualification</th>
+        <th>Image</th>
+        <th>Action</th>
+    </tr>
+
+    {% for doctor in doctors %}
+    <tr>
+        <td>{{ forloop.counter }}</td>
+        <td>{{ doctor.doc_name }}</td>
+        <td>{{ doctor.doc_dpt }}</td>
+        <td>{{ doctor.doc_phone }}</td>
+        <td>{{ doctor.doc_email }}</td>
+        <td>{{ doctor.doc_quali }}</td>
+
+        <td>
+            {% if doctor.doc_image %}
+    <img src="{{ doctor.doc_image.url }}" width="80">
+{% else %}
+    No Image
+{% endif %}
+        </td>
+
+        <td>
+    <a href="{% url 'edit_doctor_page' doc_id=doctor.id %}" class="btn btn-sm btn-primary" style="width: 70px; ">
+        Edit
+    </a>
+
+    <a href="{% url 'delete_doctor' doc_id=doctor.id %}" class="btn btn-sm btn-danger"style="width: 70px; padding: 10px ; margin-top: 5px">
+        Delete
+    </a>
+</td>
+    </tr>
+    {% endfor %}
+
+</table>
+
+</body>
+</html>
+
+{% endblock %}

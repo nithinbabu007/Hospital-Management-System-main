@@ -1,0 +1,57 @@
+{% extends "doctor_page.html" %}
+
+{% block content %}
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+       
+
+        canvas {
+            max-width: 400px;
+            margin: auto;
+        }
+    </style>
+
+<body>
+
+    <h1>Attendance Overview </h1>
+
+    <canvas id="attendanceChart"></canvas>
+    
+     {% comment %} Disable Button After Click {% endcomment %}
+    {% if already_marked %}
+    <button class="btn btn-secondary" disabled>Already Marked ✅</button>
+{% else %}
+    <form method="POST" action="{% url 'mark_attendance' %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-success">Mark Present</button>
+    </form>
+{% endif %}
+
+    <script>
+        const data = {
+            labels: ['Present', 'Absent'],
+            datasets: [{
+                data: [{{ present }}, {{ absent }}],
+                backgroundColor: ['#0cf342', '#f10b22'],
+            }]
+        };
+
+        const config = {
+            type: 'pie',
+            data: data,
+        };
+
+        new Chart(
+            document.getElementById('attendanceChart'),
+            config
+        );
+    </script>
+
+</body>
+
+
+{% endblock  %}

@@ -1,0 +1,54 @@
+{% extends "index.html" %}
+{% block content %}
+
+<div class="container mt-5">
+
+    <h2 class="text-center mb-4">Edit Doctor</h2>
+
+    <form method="POST" enctype="multipart/form-data" action="{% url 'update_doctor' doctor.id %}">
+        {% csrf_token %}
+
+        <div class="mb-3">
+            <label class="form-label">Doctor Name</label>
+            <input type="text" class="form-control" name="name" value="{{ doctor.doc_name }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Department</label>
+            <input type="text" class="form-control" name="department" value="{{ doctor.doc_dpt }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Phone</label>
+            <input type="text" class="form-control" name="phone" value="{{ doctor.doc_phone }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-control" name="email" value="{{ doctor.doc_email }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Qualification</label>
+            <input type="text" class="form-control" name="doc_quali" value="{{ doctor.doc_quali }}">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Doctor Image</label><br>
+
+            {% if doctor.doc_image %}
+                <img src="{{ doctor.doc_image.url }}" width="120"  height="120" class="mb-2">
+            {% endif %}
+
+            <input type="file" class="form-control" name="image">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Update Doctor</button>
+
+        <a href="{% url 'doctor_list' %}" class="btn btn-secondary">Cancel</a>
+
+    </form>
+
+</div>
+
+{% endblock %}

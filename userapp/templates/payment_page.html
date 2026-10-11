@@ -1,0 +1,80 @@
+{% extends "home_page.html" %}
+
+{% block content %}
+{% if razorpay_key %}<script src="https://checkout.razorpay.com/v1/checkout.js"></script>{% endif %}
+<style>
+  .payment-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 80vh;
+    gap: 16px;
+  }
+
+  .pay-btn {
+    background: linear-gradient(135deg, #3399cc, #66ccff);
+    color: white;
+    font-size: 18px;
+    padding: 15px 40px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    transition: 0.3s ease;
+  }
+
+  .pay-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.3);
+  }
+
+  .demo-note {
+    color: #888;
+    font-size: 14px;
+  }
+</style>
+
+<div class="payment-container">
+  <button id="pay-btn" class="pay-btn">Pay ₹150</button>
+  {% if not razorpay_key %}
+  <p class="demo-note">Demo mode: no Razorpay key configured, this will simulate a successful payment.</p>
+  {% endif %}
+</div>
+
+{% if razorpay_key %}
+<script>
+var options = {
+    "key": "{{ razorpay_key }}",
+    "amount": "{{ amount }}",
+    "currency": "INR",
+    "name": "Hospital Appointment",
+    "description": "Booking Fee",
+    "order_id": "{{ payment.id }}",
+
+    "handler": function (response){
+        window.location.href = "/payment_success/?payment_id=" + response.razorpay_payment_id;
+    },
+
+    "theme": {
+        "color": "#3399cc"
+    }
+};
+
+var rzp1 = new Razorpay(options);
+
+document.getElementById('pay-btn').onclick = function(e){
+    rzp1.open();
+    e.preventDefault();
+}
+</script>
+{% else %}
+<script>
+document.getElementById('pay-btn').onclick = function(e){
+    e.preventDefault();
+    window.location.href = "/payment_success/?payment_id=demo";
+}
+</script>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,73 @@
+{% extends "index.html" %}
+{% block content %}
+
+<div class="container mt-4">
+    <div class="col-md-6 offset-md-3">
+        <div class="card shadow">
+            <div class="card-header bg-warning text-dark text-center">
+                <h4>Edit Department</h4>
+            </div>
+
+            <div class="card-body">
+                <form method="POST" enctype="multipart/form-data" action="{% url 'update_department' department.id %}">
+                    {% csrf_token %}
+
+                    <!-- Name -->
+                    <div class="mb-3">
+                        <label>Department Name</label>
+                        <input type="text" name="dpt_name" class="form-control"
+                               value="{{ department.dpt_name }}" required>
+                    </div>
+
+                    <!-- Description -->
+                    <div class="mb-3">
+                        <label>Description</label>
+                        <textarea name="dpt_des" class="form-control">{{ department.dpt_des }}</textarea>
+                    </div>
+
+                    <!-- Phone -->
+                    <div class="mb-3">
+                        <label>Phone</label>
+                        <input type="text" name="dpt_phone" class="form-control"
+                               value="{{ department.dpt_phone }}">
+                    </div>
+
+                    <!-- Email -->
+                    <div class="mb-3">
+                        <label>Email</label>
+                        <input type="email" name="dpt_email" class="form-control"
+                               value="{{ department.dpt_email }}">
+                    </div>
+
+                    <!-- Current Image -->
+                    <div class="mb-3">
+                        <label>Current Image</label><br>
+                        {% if department.dpt_image %}
+                            <img src="{{ department.dpt_image.url }}" width="100" class="mb-2">
+                        {% else %}
+                            <p>No Image</p>
+                        {% endif %}
+                    </div>
+
+                    <!-- Upload New Image -->
+                    <div class="mb-3">
+                        <label>Change Image</label>
+                        <input type="file" name="dpt_image" class="form-control">
+                    </div>
+
+                    <!-- Buttons -->
+                    <button type="submit" class="btn btn-primary w-100">
+                        Update Department
+                    </button>
+
+                    <a href="{% url 'view_department' %}" class="btn btn-secondary w-100 mt-2">
+                        Back
+                    </a>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

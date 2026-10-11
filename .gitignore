@@ -1,0 +1,32 @@
+﻿venv/
+venv_new/
+__pycache__/
+*.py[cod]
+.env
+.env.*
+!.env.example
+.vscode/
+
+db.sqlite3
+media/
+venv/
+venv_new/
+__pycache__/
+*.py[cod]
+.env
+.env.*
+!.env.example
+.vscode/
+
+# Python
+__pycache__/
+*.py[cod]
+venv/
+venv_new/
+
+# Secrets
+.env
+.env.*
+
+# Editor
+.vscode/
